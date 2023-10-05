@@ -7,10 +7,10 @@ class ArticleSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100)
     date = serializers.DateTimeField()
 
-    def create(self,validated_data):
+    def create(self, validated_data):
         return Article.objects.create(validated_data)
     
-    def update(self,instance,validated_data):
+    def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.author = validated_data.get('author', instance.author)
         instance.email = validated_data.get('email', instance.email)
