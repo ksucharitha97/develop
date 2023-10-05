@@ -141,19 +141,19 @@ class ArticleAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-class ArticleDetails(APIView):
+class Article_detailsAPIview(APIView):
     def get_object(self,id):
         try:
             return Article.objects.get(id=id)
         except Article.DoesNotExist:
             return Response({"message":"Object Not Found"}, status=status.HTTP_404_NOT_FOUND)
     def get(self,request,id):
-        article = self.get.object(id)
+        article = self.get_object(id)
         serializer = ArticleSerializer(article, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def get(self,request,id):
-        article = self.get.object(id)
+        article = self.get_object(id)
         serializer = ArticleSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -163,6 +163,6 @@ class ArticleDetails(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self,request,id):
-        article = self.get.object(id)
+        article = self.get_object(id)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
